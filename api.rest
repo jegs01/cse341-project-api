@@ -1,4 +1,4 @@
 # Request to the published (deployed) version
 ### SWAGGER DOCUMENTATION PAGE (deployed)
-https://onrender.com/api-docs
+https://cse341-project-api.onrender.com/api-docs
 
