@@ -5,8 +5,8 @@ const doc = {
     tittle: 'Animal Api',
     description: 'Animal Api'
   },
-  host: 'localhost:3000',
-  schemes: ['http', 'https']
+  host: 'cse341-project-api.onrender.com',
+  schemes: ['https', 'http']
 };
 
 const outputFile = './swagger.json';
