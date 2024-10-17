@@ -1,0 +1,392 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "tittle": "Animal Api",
+    "description": "Animal Api",
+    "version": "1.0.0",
+    "title": "REST API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/animal/": {
+      "get": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Animal details to create",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Sample Animal"
+                },
+                "species": {
+                  "type": "string",
+                  "example": "Mammal"
+                },
+                "habitat": {
+                  "type": "string",
+                  "example": "Forest"
+                },
+                "extinct": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/animal/{animalId}": {
+      "get": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the animal to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Animal details to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Animal Name"
+                },
+                "species": {
+                  "type": "string",
+                  "example": "Reptile"
+                },
+                "habitat": {
+                  "type": "string",
+                  "example": "Desert"
+                },
+                "extinct": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the animal to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/animal/search": {
+      "get": {
+        "tags": [
+          "Animal"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the animal to search for",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "habitat",
+            "in": "query",
+            "description": "Habitat of the animal to search for",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "extinct",
+            "in": "query",
+            "description": "Search for animals based on extinction status (true or false)",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/zoo/": {
+      "get": {
+        "tags": [
+          "Zoo"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Zoo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Zoo animal details to add",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "animalId": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Section A"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/zoo/{animalId}": {
+      "get": {
+        "tags": [
+          "Zoo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the animal in the zoo inventory"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Zoo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Zoo animal location details to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "location": {
+                  "type": "string",
+                  "example": "Section B"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Zoo"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "animalId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the animal to remove from the zoo inventory"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
