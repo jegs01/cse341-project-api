@@ -196,45 +196,6 @@
         }
       }
     },
-    "/api/animal/search": {
-      "get": {
-        "tags": [
-          "Animal"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "description": "Name of the animal to search for",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "habitat",
-            "in": "query",
-            "description": "Habitat of the animal to search for",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "extinct",
-            "in": "query",
-            "description": "Search for animals based on extinction status (true or false)",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/api/zoo/": {
       "get": {
         "tags": [

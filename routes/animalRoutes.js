@@ -13,6 +13,4 @@ router.put('/:animalId', isAuthenticated, animalController.updateAnimal);
 
 router.delete('/:animalId', isAuthenticated, animalController.deleteAnimal);
 
-router.get('/search', animalController.searchAnimals);
-
 module.exports = router;

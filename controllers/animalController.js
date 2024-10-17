@@ -112,39 +112,3 @@ exports.deleteAnimal = handleErrors(async (req, res) => {
     res.status(500).json({ error: 'Error deleting animal.' });
   }
 });
-
-// Search animals based on query parameters
-exports.searchAnimals = handleErrors(async (req, res) => {
-  //#swagger.tags=['Animal']
-  /* #swagger.parameters['name'] = {
-      in: 'query',
-      description: 'Name of the animal to search for',
-      required: false,
-      type: 'string'
-  }
-  #swagger.parameters['habitat'] = {
-      in: 'query',
-      description: 'Habitat of the animal to search for',
-      required: false,
-      type: 'string'
-  }
-  #swagger.parameters['extinct'] = {
-      in: 'query',
-      description: 'Search for animals based on extinction status (true or false)',
-      required: false,
-      type: 'boolean'
-  } */
-  const { name, habitat, extinct } = req.query;
-  const query = {};
-
-  if (name) query.name = { $regex: name, $options: 'i' };
-  if (habitat) query.habitat = { $regex: habitat, $options: 'i' };
-  if (extinct) query.extinct = extinct === 'true';
-
-  try {
-    const animals = await Animal.find(query);
-    res.status(200).json(animals);
-  } catch {
-    res.status(500).json({ error: 'Error searching animals.' });
-  }
-});
