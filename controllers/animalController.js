@@ -6,8 +6,8 @@ const Animal = require('../models/animalModel');
 const animalSchema = Joi.object({
   name: Joi.string().min(3).required(),
   species: Joi.string().required(),
-  habitat: Joi.string().optional(),
-  extinct: Joi.boolean().optional()
+  habitat: Joi.string().required(),
+  extinct: Joi.boolean().required()
 });
 
 // Validation schema for updating an animal
@@ -110,5 +110,37 @@ exports.deleteAnimal = handleErrors(async (req, res) => {
     res.status(200).json({ message: 'Animal deleted successfully.' });
   } catch {
     res.status(500).json({ error: 'Error deleting animal.' });
+  }
+});
+
+exports.searchAnimals = handleErrors(async (req, res) => {
+  //#swagger.tags=['Animal']
+  /* #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Body with search parameters for animals',
+      required: false,
+      schema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          habitat: { type: 'string' },
+          extinct: { type: 'boolean' }
+        }
+      }
+  } */
+  const { name, habitat, extinct } = req.body;
+  const query = {};
+
+  if (name) query.name = { $regex: name, $options: 'i' };
+  if (habitat) query.habitat = { $regex: habitat, $options: 'i' };
+  if (typeof extinct === 'boolean') {
+    query.extinct = extinct;
+  }
+
+  try {
+    const animals = await Animal.find(query);
+    res.status(200).json(animals);
+  } catch (err) {
+    res.status(500).json({ error: 'Error searching animals.', details: err.message });
   }
 });
