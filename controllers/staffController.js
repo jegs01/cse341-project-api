@@ -6,7 +6,6 @@ const Joi = require('joi');
 const staffSchema = Joi.object({
   staffId: Joi.string().required(),
   name: Joi.string().min(2).required(),
-  email: Joi.string().email().required(),
   position: Joi.string().required(),
   department: Joi.string().required()
 });
@@ -15,7 +14,6 @@ const staffSchema = Joi.object({
 const staffSchemaForUpdate = Joi.object({
   staffId: Joi.string().optional(),
   name: Joi.string().min(2).optional(),
-  email: Joi.string().email().optional(),
   position: Joi.string().optional(),
   department: Joi.string().optional()
 });
