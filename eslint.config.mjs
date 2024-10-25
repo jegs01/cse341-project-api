@@ -10,7 +10,8 @@ export default [
       sourceType: 'commonjs',
       globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
+        ...globals.jest
       }
     }
   },

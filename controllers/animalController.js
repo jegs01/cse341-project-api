@@ -1,6 +1,7 @@
 const { handleErrors } = require('./errorController');
 const Joi = require('joi');
 const Animal = require('../models/animalModel');
+const mongoose = require('mongoose');
 
 // Validation schema for creating an animal
 const animalSchema = Joi.object({
@@ -86,6 +87,11 @@ exports.getAnimalById = handleErrors(async (req, res) => {
   //#swagger.tags=['Animal']
   //#swagger.parameters['animalId'] = { description: 'ID of the animal to retrieve' }
   const { animalId } = req.params;
+
+  if (!mongoose.isValidObjectId(animalId)) {
+    return res.status(400).json({ error: 'Invalid animal ID format.' });
+  }
+
   try {
     const animal = await Animal.findById(animalId);
     if (!animal) {

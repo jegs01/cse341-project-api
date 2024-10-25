@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const animalRoutes = require('./routes/animalRoutes');
 const zooRoutes = require('./routes/zooRoutes');
+const userRoutes = require('./routes/userRoutes');
+const staffRoutes = require('./routes/staffRoutes');
 const viewRouter = require('./routes/githubUserRoutes');
 const swaggerRouter = require('./routes/swaggerRoutes');
 const mongoose = require('mongoose');
@@ -19,10 +21,7 @@ app.use(express.json());
 
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(DB)
   .then(() => console.log('DB connection successful!'))
   .catch((err) => console.error('DB connection error:', err));
 
@@ -80,6 +79,8 @@ passport.deserializeUser(async (id, done) => {
 app.use('/', viewRouter);
 app.use('/api/animal', animalRoutes);
 app.use('/api/zoo', zooRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/staff', staffRoutes);
 app.use('/', swaggerRouter);
 
 // eslint-disable-next-line no-unused-vars
@@ -92,7 +93,5 @@ app.use((err, req, res, next) => {
   });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
-});
+// Export the app
+module.exports = app;
