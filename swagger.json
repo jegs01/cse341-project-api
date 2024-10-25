@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "title": "REST API"
   },
-  "host": "localhost:3000",
+  "host": "cse341-project-api.onrender.com",
   "basePath": "/",
   "schemes": [
     "https",
