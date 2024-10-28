@@ -11,4 +11,14 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Static method to check if a username already exists
+userSchema.statics.isUsernameExists = async function (username) {
+  return await this.findOne({ username });
+};
+
+// Static method to check if an email already exists
+userSchema.statics.isEmailExists = async function (email) {
+  return await this.findOne({ email });
+};
+
 module.exports = mongoose.model('User', userSchema);

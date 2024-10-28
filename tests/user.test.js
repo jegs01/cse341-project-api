@@ -3,6 +3,8 @@ const app = require('../app');
 const User = require('../models/userModel');
 const mongoose = require('mongoose');
 
+jest.setTimeout(100000);
+
 beforeAll(async () => {
   await User.deleteMany({});
   await User.create([

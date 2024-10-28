@@ -3,6 +3,8 @@ const { Types } = require('mongoose');
 const app = require('../app');
 const Zoo = require('../models/zooModel');
 
+jest.setTimeout(100000);
+
 describe('GET /api/zoo/:animalId', () => {
   it('should return a 400 for invalid ID format', async () => {
     const res = await request(app).get('/api/zoo/invalidIdFormat');

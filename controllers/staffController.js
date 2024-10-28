@@ -1,3 +1,4 @@
+// staffController.js
 const Staff = require('../models/staffModel');
 const { handleErrors } = require('./errorController');
 const Joi = require('joi');
@@ -7,7 +8,12 @@ const staffSchema = Joi.object({
   staffId: Joi.string().required(),
   name: Joi.string().min(2).required(),
   position: Joi.string().required(),
-  department: Joi.string().required()
+  department: Joi.string().required(),
+  email: Joi.string().email().required(),
+  phone: Joi.string()
+    .pattern(/^[0-9-]+$/)
+    .required(),
+  hireDate: Joi.date().required()
 });
 
 // Validation schema for updating a staff member
@@ -15,7 +21,12 @@ const staffSchemaForUpdate = Joi.object({
   staffId: Joi.string().optional(),
   name: Joi.string().min(2).optional(),
   position: Joi.string().optional(),
-  department: Joi.string().optional()
+  department: Joi.string().optional(),
+  email: Joi.string().email().optional(),
+  phone: Joi.string()
+    .pattern(/^[0-9-]+$/)
+    .optional(),
+  hireDate: Joi.date().optional()
 });
 
 // Create a new staff member
@@ -29,13 +40,29 @@ exports.createStaff = handleErrors(async (req, res) => {
             staffId: 'STF001',
             name: 'John Doe',
             position: 'Manager',
-            department: 'Sales'
+            department: 'Sales',
+            email: 'john.doe@example.com',
+            phone: '123-456-7890',
+            hireDate: '2022-01-01'
         }
     } */
+
   const { error } = staffSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
+  const { staffId, email } = req.body;
+
   try {
+    const existingStaff = await Staff.isStaffIdExists(staffId);
+    if (existingStaff) {
+      return res.status(400).json({ error: `Staff ID ${staffId} already exists.` });
+    }
+
+    const existingEmail = await Staff.isEmailExists(email);
+    if (existingEmail) {
+      return res.status(400).json({ error: `Email ${email} already exists.` });
+    }
+
     const newStaff = await Staff.create(req.body);
     res.status(201).json(newStaff);
   } catch (error) {
@@ -63,7 +90,7 @@ exports.getStaffById = handleErrors(async (req, res) => {
     if (!staff) return res.status(404).json({ error: 'Staff not found' });
     res.json(staff);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -77,17 +104,38 @@ exports.updateStaff = handleErrors(async (req, res) => {
             staffId: 'STF002',
             name: 'Jane Comfort',
             position: 'Team Lead',
-            department: 'Marketing'
+            department: 'Marketing',
+            email: 'jane.comfort@example.com',
+            phone: '123-456-7890',
+            hireDate: '2023-02-15'
         }
     } */
   const { error } = staffSchemaForUpdate.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
+  const { staffId, email } = req.body;
+  const currentStaffId = req.params.staffId;
+
   try {
-    const updatedStaff = await Staff.findOneAndUpdate({ staffId: req.params.staffId }, req.body, {
+    if (staffId) {
+      const existingStaffId = await Staff.findOne({ staffId: { $ne: currentStaffId } });
+      if (existingStaffId) {
+        return res.status(400).json({ error: `Staff ID ${staffId} is already in use.` });
+      }
+    }
+
+    if (email) {
+      const existingEmail = await Staff.findOne({ email, staffId: { $ne: currentStaffId } });
+      if (existingEmail) {
+        return res.status(400).json({ error: `Email ${email} is already in use.` });
+      }
+    }
+
+    const updatedStaff = await Staff.findOneAndUpdate({ staffId: currentStaffId }, req.body, {
       new: true
     });
     if (!updatedStaff) return res.status(404).json({ error: 'Staff not found' });
+
     res.json(updatedStaff);
   } catch (error) {
     res.status(400).json({ error: error.message });

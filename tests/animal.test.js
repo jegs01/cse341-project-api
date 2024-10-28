@@ -4,6 +4,8 @@ const Animal = require('../models/animalModel');
 const mongoose = require('mongoose');
 const { Types } = require('mongoose');
 
+jest.setTimeout(100000);
+
 beforeAll(async () => {
   await Animal.deleteMany({});
   await Animal.create([

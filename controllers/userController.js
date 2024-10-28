@@ -35,12 +35,25 @@ exports.createUser = handleErrors(async (req, res) => {
             role: 'user'
         }
     } */
+
+  // Validate request body with Joi
   const { error } = userSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
+  const { username, email } = req.body;
+
   try {
-    const newUser = new User(req.body);
-    await newUser.save();
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ error: `Username ${username} is already taken.` });
+    }
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ error: `Email ${email} is already in use.` });
+    }
+
+    const newUser = await User.create(req.body);
     res.status(201).json(newUser);
   } catch {
     res.status(500).json({ error: 'Error creating user' });
@@ -74,13 +87,27 @@ exports.updateUser = handleErrors(async (req, res) => {
             role: 'admin'
         }
     } */
+
   const { error } = userSchemaForUpdate.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
+  const { username, email } = req.body;
+
   try {
+    const existingUsername = await User.isUsernameExists(username);
+    if (existingUsername && existingUsername.username !== req.params.username) {
+      return res.status(400).json({ error: `Username ${username} already exists.` });
+    }
+
+    const existingEmail = await User.isEmailExists(email);
+    if (existingEmail && existingEmail.email !== req.body.email) {
+      return res.status(400).json({ error: `Email ${email} already exists.` });
+    }
+
     const updatedUser = await User.findOneAndUpdate({ username: req.params.username }, req.body, {
       new: true
     });
+
     if (!updatedUser) return res.status(404).json({ error: 'User not found' });
     res.json(updatedUser);
   } catch {

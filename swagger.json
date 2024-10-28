@@ -620,6 +620,18 @@
                 "department": {
                   "type": "string",
                   "example": "Sales"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "john.doe@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "123-456-7890"
+                },
+                "hireDate": {
+                  "type": "string",
+                  "example": "2022-01-01"
                 }
               }
             }
@@ -668,6 +680,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           }
@@ -707,6 +722,18 @@
                 "department": {
                   "type": "string",
                   "example": "Marketing"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "jane.comfort@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "123-456-7890"
+                },
+                "hireDate": {
+                  "type": "string",
+                  "example": "2023-02-15"
                 }
               }
             }
