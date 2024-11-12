@@ -24,9 +24,9 @@ This API was developed using **Node.js**, **Express**, **MongoDB**, and **Mongoo
 
 ## Live URLs
 
-- **Login** - [https://cse341-xeh0.onrender.com/login](https://cse341-xeh0.onrender.com/login)
-- **Logout** - [https://cse341-xeh0.onrender.com/logout](https://cse341-xeh0.onrender.com/logout)
-- **Swagger Documentation** - [https://cse341-xeh0.onrender.com/api-docs](https://cse341-xeh0.onrender.com/api-docs)
+- **Login** - [https://cse341-project-api.onrender.com/login](https://cse341-project-api.onrender.com/login)
+- **Logout** - [https://cse341-project-api.onrender.com/logout](https://cse341-project-api.onrender.com/logout)
+- **Swagger Documentation** - [https://cse341-project-api.onrender.com/api-docs](https://cse341-project-api.onrender.com/api-docs)
 
 ## Key Features
 
